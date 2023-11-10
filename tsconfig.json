@@ -1,0 +1,12 @@
+{
+  "exclude": ["./dist/*", "./node_modules/*", "./public/*", "./web/*"],
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "outDir": "./dist/",
+    "module": "es2022",
+    "target": "es2022",
+    "strict": false
+  }
+}
