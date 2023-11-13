@@ -9,7 +9,7 @@ this tool can generate **m3u8 stream** links, that you can stream on multiple pl
 ## ❤️‍🔥 quick start
 
 you need to **pull this repo** by using <br/>
-`gh repo clone lathlaszlo/tv2play-bypass`
+`gh repo clone halozat/tv2play-bypass`
 
 then **start setup**, by executing <br/>
 `setup.sh`
