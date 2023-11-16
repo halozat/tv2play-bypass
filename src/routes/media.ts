@@ -11,7 +11,7 @@ export function createMediaHandler() {
         const streamHash = getStreamHash(req?.params?.streamHash)
         if (streamHash === null)
           return res.json({
-            message: `nincs ilyen media fájl...`
+            message: `nincs ilyen media fájl...`,
           })
 
         req["newPath"] = streamHash.baseUrl + req?.params?.media
@@ -23,7 +23,7 @@ export function createMediaHandler() {
         logLevel: "silent",
         pathRewrite: (path, req) => {
           return req["newPath"]
-        }
+        },
       })
     )
   })

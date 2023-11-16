@@ -151,7 +151,7 @@ export default class TV2PlayParser {
                 });
             })
                 .catch((err) => {
-                if (err.response.status === 404)
+                if (err?.response?.status === 404)
                     return reject({
                         message: `sorozat/rész: ${series}/${part} nem található!`,
                     });
@@ -162,7 +162,7 @@ export default class TV2PlayParser {
         return new Promise(async (resolve, reject) => {
             if (!this.authenticated)
                 reject({
-                    message: `bannolták/nem lehet bejelentkezni a tv2play accountomat...\nkérlek reportold a hibát @ejfel-nek telegrammon.`,
+                    message: `bannolták/nem lehet bejelentkezni a tv2play accountomat...\nkérlek reportold a hibát @halozat-nak telegrammon.`,
                 });
             // just basic caching.
             const cachedValue = cache.get(url);

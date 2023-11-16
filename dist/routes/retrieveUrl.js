@@ -7,12 +7,12 @@ export function createRetrieveHandler() {
         let link = req.body?.link;
         let token = req.body?.token;
         let ip = req?.headers["x-forwarded-for"]?.toString();
-        logger.request(`retrieve: ${link}\t${ip}`);
+        logger.request(`retrieve: ${link}`);
         // captcha is only validated if an ip is sent from the cloudflare proxy
         if (ip) {
             if (!token)
                 return res.status(400).json({
-                    message: `nem csináltad meg a captcha-t!`
+                    message: `nem csináltad meg a captcha-t!`,
                 });
             let captchaResult = await verifyCaptcha(ip, token);
             if (!captchaResult.success) {
@@ -21,7 +21,7 @@ export function createRetrieveHandler() {
         }
         if (!link)
             return res.status(400).json({
-                message: `nem megfelelő linket adtál meg!`
+                message: `nem megfelelő linket adtál meg!`,
             });
         tv2play
             .searchByUrl(link?.toString().trim())

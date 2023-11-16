@@ -1,4 +1,4 @@
-import { createProxyMiddleware, responseInterceptor } from "http-proxy-middleware";
+import { createProxyMiddleware, responseInterceptor, } from "http-proxy-middleware";
 import { getStreamHash } from "../streamDb.js";
 import { app } from "../index.js";
 import { config } from "dotenv";
@@ -13,7 +13,7 @@ export function createStreamsHandler() {
             req["streamHash"] = streamHash;
             if (!streamHash || getStreamHash(streamHash) === null)
                 return res.json({
-                    message: `nincs ilyen stream-hash...`
+                    message: `nincs ilyen stream-hash...`,
                 });
             next();
         }, createProxyMiddleware({
@@ -39,7 +39,7 @@ export function createStreamsHandler() {
                 })
                     .join("\n");
                 return resp;
-            })
+            }),
         }));
     });
 }

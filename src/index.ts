@@ -1,28 +1,28 @@
-import cors from "cors";
-import { resolve } from "path";
-import express from "express";
-import { config } from "dotenv";
-import logger from "./logger.js";
-import TV2PlayParser from "./parser.js";
-import { createMediaHandler } from "./routes/media.js";
-import { createStreamsHandler } from "./routes/streams.js";
-import { createRetrieveHandler } from "./routes/retrieveUrl.js";
-import rateLimit from "express-rate-limit";
-import { readFile } from "fs/promises";
+import cors from "cors"
+import { resolve } from "path"
+import express from "express"
+import { config } from "dotenv"
+import logger from "./logger.js"
+import TV2PlayParser from "./parser.js"
+import { createMediaHandler } from "./routes/media.js"
+import { createStreamsHandler } from "./routes/streams.js"
+import { createRetrieveHandler } from "./routes/retrieveUrl.js"
+import rateLimit from "express-rate-limit"
+import { readFile } from "fs/promises"
 
 // .env file.
-config();
+config()
 
-export const app = express();
-const port = process?.env?.PORT || 80;
-app.listen(port);
-logger.info(`listening on port: ${port}.`);
+export const app = express()
+const port = process?.env?.PORT || 80
+app.listen(port)
+logger.info(`listening on port: ${port}.`)
 
 // creating the parser.
 export const tv2play = new TV2PlayParser(
   process?.env?.T2P_MAIL,
   process?.env?.T2P_PASS
-);
+)
 
 app.use(
   cors({
@@ -32,10 +32,10 @@ app.use(
       process.env.URL,
     ],
   })
-);
+)
 
 // idk
-app.disable("x-powered-by");
+app.disable("x-powered-by")
 
 app.use(
   "/api/",
@@ -46,21 +46,21 @@ app.use(
     legacyHeaders: false,
     message: { message: `hé, 1-et kérhetsz 5 másodpercen belül!` },
   })
-);
+)
 
-createRetrieveHandler();
+createRetrieveHandler()
 // these are very important, for reverse proxying the media servers of tv2play (ip-lock)
-createStreamsHandler();
-createMediaHandler();
+createStreamsHandler()
+createMediaHandler()
 
 // create a basic error handler.
 app.use((err, req, res, next) => {
-  logger.error(`${req.path}\t${err}`);
+  logger.error(`${req.path}\t${err}`)
   return res.json({
     message:
       "hiba történt a szervernél...\nkérlek reportold a hibát @ejfel-nek telegrammon.",
-  });
-});
+  })
+})
 
 // basic version getting.
 app.get("/build", (req, res) => {
@@ -69,16 +69,16 @@ app.get("/build", (req, res) => {
       return res.json({
         version: JSON.parse(e)?.version,
         cf_sitekey: process.env.CF_SITEKEY,
-      });
+      })
     })
     .catch(() => {
       res.status(500).json({
         message: `nem sikerült lekérni a buildet...`,
-      });
-    });
-});
+      })
+    })
+})
 // create endpoints for frontend.
-app.use("/assets", express.static("./public/assets"));
+app.use("/assets", express.static("./public/assets"))
 app.get("*", (req, res) => {
-  res.sendFile(resolve("./public/index.html"));
-});
+  res.sendFile(resolve("./public/index.html"))
+})

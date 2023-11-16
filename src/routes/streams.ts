@@ -1,6 +1,6 @@
 import {
   createProxyMiddleware,
-  responseInterceptor
+  responseInterceptor,
 } from "http-proxy-middleware"
 import { getStreamHash } from "../streamDb.js"
 import { app } from "../index.js"
@@ -19,7 +19,7 @@ export function createStreamsHandler() {
 
         if (!streamHash || getStreamHash(streamHash) === null)
           return res.json({
-            message: `nincs ilyen stream-hash...`
+            message: `nincs ilyen stream-hash...`,
           })
 
         next()
@@ -49,7 +49,7 @@ export function createStreamsHandler() {
               .join("\n")
             return resp
           }
-        )
+        ),
       })
     )
   })
