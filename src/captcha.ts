@@ -21,7 +21,7 @@ export function verifyCaptcha(ip: string, token: string) {
             resolve({
               success: true
             })
-            logger.captcha(`${ip}: completed captcha`)
+            // logger.captcha(`${ip}: completed captcha`) - only needed for testing
           } else {
             resolve({
               success: false,
