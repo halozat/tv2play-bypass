@@ -20,7 +20,7 @@ here are the **values for a working setup**.
 ```dosini
 PORT # optional, sets the listening port.
 URL # the url that the site is running on.
-PROXY_MEDIA # the url that you allow streaming on (on cloudflare, probably disable caching on this subdomain.)
+-- PROXY_MEDIA # (no longer in use since 1.0.9. the main url shouldn't be proxied with cloudflare!)
 T2P_MAIL # tv2play email
 T2P_PASS # tv2play password
 CF_SITEKEY # turnstile captcha site key.
