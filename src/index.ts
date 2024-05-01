@@ -81,7 +81,7 @@ app.get("/build", (req, res) => {
 app.get("/status", (req, res) => {
   let statusCode = 200
 
-  if (tv2play.authenticated) statusCode = 500
+  if (!tv2play.authenticated) statusCode = 500
 
   res.status(statusCode).json({
     authenticated: tv2play.authenticated,
