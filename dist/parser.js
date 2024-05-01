@@ -21,7 +21,7 @@ export default class TV2PlayParser {
         return searchUrlRegex.test(url);
     }
     generateStreamURL(version, uuid) {
-        return `${process.env.URL}/streams/${version}/${uuid}`;
+        return `${process.env.URL}/streams/${version}/${uuid}.m3u8`;
     }
     // must have validated the url before calling!
     getSeriesAndPartFromURL(url) {
@@ -33,7 +33,7 @@ export default class TV2PlayParser {
     formatSeriesPart(series, part) {
         return `S${series}E${part}`;
     }
-    getAndParseManifest(url) {
+    getAndParseManifest(uuid, url) {
         return new Promise((resolve, reject) => {
             this.client
                 .get(url)
@@ -65,7 +65,7 @@ export default class TV2PlayParser {
                         message: `nem sikerült lekérni a stream endpoint verziót...`,
                     });
                 // creates a database (really just an object) for with a uuid for key.
-                const uuid = addNewStreamHash({
+                addNewStreamHash(uuid, {
                     path: parsedUrl.pathname,
                     baseUrl: streamBaseUrl,
                 });
@@ -187,7 +187,7 @@ export default class TV2PlayParser {
                 // fetch the streaming-url so we can get the manifest with all the bitrates
                 // but we only need the highest lmao
                 const manifestUrl = await this.getManifestURL(streamingURL);
-                const { stream } = await this.getAndParseManifest(manifestUrl);
+                const { stream } = await this.getAndParseManifest(encodeURIComponent(`${series}-${partRaw}`), manifestUrl);
                 const result = { title, part, expiry, stream };
                 resolve({ title, part, expiry, stream });
                 cache.set(url, result); /* caceh :3 */

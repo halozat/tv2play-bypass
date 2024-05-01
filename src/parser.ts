@@ -6,6 +6,7 @@ import m3u8Parser from "m3u8-parser"
 import TVCache from "./cache.js"
 import { addNewStreamHash } from "./streamDb.js"
 import { config } from "dotenv"
+import { encode, stringify } from "querystring"
 
 const searchUrlRegex = /https:\/\/tv2play.hu\/([\w\d_-]+)\/([\w\d_-]+)/
 config()
@@ -41,7 +42,7 @@ export default class TV2PlayParser {
   }
 
   private generateStreamURL(version: string, uuid: string) {
-    return `${process.env.URL}/streams/${version}/${uuid}`
+    return `${process.env.URL}/streams/${version}/${uuid}.m3u8`
   }
 
   // must have validated the url before calling!
@@ -60,7 +61,7 @@ export default class TV2PlayParser {
     return `S${series}E${part}`
   }
 
-  private getAndParseManifest(url: string) {
+  private getAndParseManifest(uuid: string, url: string) {
     return new Promise<{ stream: Stream }>((resolve, reject) => {
       this.client
         .get(url)
@@ -97,7 +98,7 @@ export default class TV2PlayParser {
             })
 
           // creates a database (really just an object) for with a uuid for key.
-          const uuid = addNewStreamHash({
+          addNewStreamHash(uuid, {
             path: parsedUrl.pathname,
             baseUrl: streamBaseUrl,
           })
@@ -248,7 +249,10 @@ export default class TV2PlayParser {
         // fetch the streaming-url so we can get the manifest with all the bitrates
         // but we only need the highest lmao
         const manifestUrl = await this.getManifestURL(streamingURL)
-        const { stream } = await this.getAndParseManifest(manifestUrl)
+        const { stream } = await this.getAndParseManifest(
+          encodeURIComponent(`${series}-${partRaw}`),
+          manifestUrl
+        )
 
         const result = { title, part, expiry, stream }
 

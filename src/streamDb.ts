@@ -7,14 +7,14 @@ interface StreamDBValue {
   baseUrl: string
 }
 
-export function addNewStreamHash(value: StreamDBValue) {
+export function addNewStreamHash(uuid: string, value: StreamDBValue) {
   // for testing purposes...
   // const uuid = `test`
-  const uuid = randomUUID()
   streams[uuid] = value
   return uuid
 }
 
 export function getStreamHash(uuid: string) {
-  return streams[uuid] ?? null
+  // remove .m3u8 from the uuid incase it has it.
+  return streams[uuid.replace(".m3u8", "")] ?? null
 }

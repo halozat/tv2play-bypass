@@ -1,12 +1,11 @@
-import { randomUUID } from "crypto";
 let streams = {};
-export function addNewStreamHash(value) {
+export function addNewStreamHash(uuid, value) {
     // for testing purposes...
     // const uuid = `test`
-    const uuid = randomUUID();
     streams[uuid] = value;
     return uuid;
 }
 export function getStreamHash(uuid) {
-    return streams[uuid] ?? null;
+    // remove .m3u8 from the uuid incase it has it.
+    return streams[uuid.replace(".m3u8", "")] ?? null;
 }
