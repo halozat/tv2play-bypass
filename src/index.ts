@@ -57,8 +57,7 @@ createMediaHandler()
 app.use((err, req, res, next) => {
   logger.error(`${req.path}\t${err}`)
   return res.json({
-    message:
-      "hiba történt a szervernél...\nkérlek reportold a hibát @ejfel-nek telegrammon.",
+    message: "hiba történt a szervernél...",
   })
 })
 
@@ -77,6 +76,18 @@ app.get("/build", (req, res) => {
       })
     })
 })
+
+// added for uptime measuring.
+app.get("/status", (req, res) => {
+  let statusCode = 200
+
+  if (tv2play.authenticated) statusCode = 500
+
+  res.status(statusCode).json({
+    authenticated: tv2play.authenticated,
+  })
+})
+
 // create endpoints for frontend.
 app.use("/assets", express.static("./public/assets"))
 app.get("*", (req, res) => {

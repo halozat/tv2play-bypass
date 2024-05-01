@@ -41,7 +41,7 @@ export default class TV2PlayParser {
   }
 
   private generateStreamURL(version: string, uuid: string) {
-    return `${process.env.PROXY_MEDIA}/streams/${version}/${uuid}`
+    return `${process.env.URL}/streams/${version}/${uuid}`
   }
 
   // must have validated the url before calling!

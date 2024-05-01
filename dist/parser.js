@@ -21,7 +21,7 @@ export default class TV2PlayParser {
         return searchUrlRegex.test(url);
     }
     generateStreamURL(version, uuid) {
-        return `${process.env.PROXY_MEDIA}/streams/${version}/${uuid}`;
+        return `${process.env.URL}/streams/${version}/${uuid}`;
     }
     // must have validated the url before calling!
     getSeriesAndPartFromURL(url) {

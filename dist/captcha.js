@@ -1,6 +1,5 @@
 import axios from "axios";
 import { config } from "dotenv";
-import logger from "./logger.js";
 config();
 export function verifyCaptcha(ip, token) {
     return new Promise((resolve, reject) => {
@@ -15,7 +14,7 @@ export function verifyCaptcha(ip, token) {
                 resolve({
                     success: true
                 });
-                logger.captcha(`${ip}: completed captcha`);
+                // logger.captcha(`${ip}: completed captcha`) - only needed for testing
             }
             else {
                 resolve({
