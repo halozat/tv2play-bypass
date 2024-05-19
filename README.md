@@ -1,6 +1,7 @@
 # tv2play-bypass 👀
 
 > a web interface for ripping stream links from tv2play, and proxying it, with no ads.
+> (there are plans to port this project to next.js)
 
 ### [t2p.lath.hu](https://t2p.lath.hu)
 
